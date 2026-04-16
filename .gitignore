@@ -1,4 +1,5 @@
 .DS_Store
+.config/alacritty/themes/
 .vim/bundle/
 .tmux/plugins/
 .config/nvim/lazy-lock.json
