@@ -1,0 +1,9 @@
+.DS_Store
+.vim/bundle/
+.tmux/plugins/
+.config/nvim/lazy-lock.json
+.config/calcurse/caldav/
+.config/calcurse/venv/
+.config/gh/hosts.yml
+.claude/settings.local.json
+.claude/hooks/

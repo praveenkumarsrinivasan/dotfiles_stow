@@ -1,0 +1,5 @@
+theme = Adventure
+font-family = Hack Nerd Font Mono
+
+# Rename current tab/surface title
+keybind = cmd+shift+i=prompt_surface_title

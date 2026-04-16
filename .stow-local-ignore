@@ -1,0 +1,8 @@
+README\.md
+LICENSE
+\.DS_Store
+\.git
+\.gitignore
+\.gitmodules
+^/bin
+^/zsh-custom
