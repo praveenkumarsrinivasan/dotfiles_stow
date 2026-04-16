@@ -6,6 +6,7 @@ alias dl='cd ~/Downloads'
 alias dk='cd ~/Desktop'
 alias doc='cd ~/Documents'
 alias sbx='cd ~/Documents/Sandbox'
+alias vi='nvim'
 
 # Recursively delete .DS_Store files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
