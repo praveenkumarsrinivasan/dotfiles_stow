@@ -6,8 +6,8 @@
     editor = vim
     excludesfile = ~/.gitignore_global
 [user]
-	name = Praveen Srinivasan
-	email = praveen.srinivasan@zip.co
+	name = Praveen Kumar Srinivasan
+	email = praveen.sxi@gmail.com
 [credential]
     helper = osxkeychain
 [push]
