@@ -179,10 +179,10 @@ local HTML = [[
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (filtered[selected]) post({ action: 'pick', winId: filtered[selected].winId });
-    } else if (e.key === 'ArrowDown' || (e.ctrlKey && e.key === 'n')) {
+    } else if (e.key === 'ArrowDown' || (e.ctrlKey && (e.key === 'n' || e.key === 'j'))) {
       e.preventDefault();
       if (filtered.length) { selected = (selected + 1) % filtered.length; updateSelection(); }
-    } else if (e.key === 'ArrowUp' || (e.ctrlKey && e.key === 'p')) {
+    } else if (e.key === 'ArrowUp' || (e.ctrlKey && (e.key === 'p' || e.key === 'k'))) {
       e.preventDefault();
       if (filtered.length) { selected = (selected - 1 + filtered.length) % filtered.length; updateSelection(); }
     } else if (e.metaKey && /^[1-9]$/.test(e.key)) {
@@ -277,10 +277,16 @@ function M.show()
   webview:show()
   webview:bringToFront(true)
 
+  local hsApp = hs.application.get("Hammerspoon")
+  if hsApp then hsApp:activate(true) end
+  local hswin = webview:hswindow()
+  if hswin then hswin:focus() end
+
   hs.timer.doAfter(0.08, function()
-    if webview then
-      webview:evaluateJavaScript("window.setChoices(" .. hs.json.encode(list) .. ")")
-    end
+    if not webview then return end
+    local w = webview:hswindow()
+    if w then w:focus() end
+    webview:evaluateJavaScript("window.setChoices(" .. hs.json.encode(list) .. "); document.getElementById('search').focus();")
   end)
 end
 
