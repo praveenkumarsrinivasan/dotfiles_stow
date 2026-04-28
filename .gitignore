@@ -8,3 +8,5 @@
 .config/gh/hosts.yml
 .claude/settings.local.json
 .claude/hooks/
+.config/karabiner/automatic_backups/
+zsh-custom/slack_alias.zsh
