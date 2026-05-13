@@ -11,7 +11,8 @@ _fzf_compgen_dir()  { fd --type=d --hidden --exclude .git . "$1"; }
 
 export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'" export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
-alias inv='nvim $(fzf -m --preview="bat --color=always {}")'
+alias fzvi='nvim $(fzf -m --preview="bat --color=always {}")'
+alias fzuvi='nvim $(fd -u | fzf --preview "bat --color=always {}")'
 
 # Zoxide (better cd)
 eval "$(zoxide init zsh)"
