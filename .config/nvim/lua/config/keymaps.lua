@@ -24,6 +24,15 @@ vim.keymap.set("n", "<leader>um", function()
   pcall(vim.cmd, "RenderMarkdown toggle")
 end, { desc = "Toggle markdown rendering" })
 
+-- Insert current datetime (yyyy-mm-dd hh:mm:ss) at cursor.
+vim.keymap.set("n", "<leader>id", function()
+  vim.api.nvim_put({ os.date("%Y-%m-%d %H:%M:%S") }, "c", true, true)
+end, { desc = "Insert datetime" })
+
+vim.keymap.set("i", "<C-g>d", function()
+  vim.api.nvim_put({ os.date("%Y-%m-%d %H:%M:%S") }, "c", false, true)
+end, { desc = "Insert datetime" })
+
 -- Reload Neovim config (re-sources init.lua; plugin specs require a restart).
 vim.keymap.set("n", "<leader>R", function()
   for name, _ in pairs(package.loaded) do
