@@ -37,3 +37,45 @@ mdpreview() {
   fi
   rm -rf "$tmpdir"
 }
+
+# Pretty-print JSON (2-space indent). Requires: python3.
+#   jsonformat file.json     # format the file IN PLACE (validated first)
+#   cat x.json | jsonformat  # read stdin, print to stdout
+jsonformat() {
+  if [[ -n "$1" ]]; then
+    local f="$1" tmp
+    [[ -r "$f" ]] || { echo "jsonformat: cannot read '$f'" >&2; return 1; }
+    tmp=$(mktemp) || return 1
+    if python3 -m json.tool --indent 2 "$f" > "$tmp" 2>/dev/null; then
+      cp "$tmp" "$f"; rm -f "$tmp"        # cp preserves original file's perms
+      echo "jsonformat: formatted $f"
+    else
+      rm -f "$tmp"
+      echo "jsonformat: invalid JSON in '$f' (left unchanged)" >&2
+      return 1
+    fi
+  else
+    python3 -m json.tool --indent 2
+  fi
+}
+
+# Pretty-print XML (2-space indent). Requires: xmllint (libxml2).
+#   xmlformat file.xml      # format the file IN PLACE (validated first)
+#   cat x.xml | xmlformat   # read stdin, print to stdout
+xmlformat() {
+  if [[ -n "$1" ]]; then
+    local f="$1" tmp
+    [[ -r "$f" ]] || { echo "xmlformat: cannot read '$f'" >&2; return 1; }
+    tmp=$(mktemp) || return 1
+    if XMLLINT_INDENT='  ' xmllint --format --encode utf-8 "$f" -o "$tmp" 2>/dev/null; then
+      cp "$tmp" "$f"; rm -f "$tmp"        # cp preserves original file's perms
+      echo "xmlformat: formatted $f"
+    else
+      rm -f "$tmp"
+      echo "xmlformat: invalid XML in '$f' (left unchanged)" >&2
+      return 1
+    fi
+  else
+    XMLLINT_INDENT='  ' xmllint --format --encode utf-8 -
+  fi
+}
