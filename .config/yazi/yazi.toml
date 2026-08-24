@@ -1,0 +1,9 @@
+# In-pane markdown preview via glow, piped through Piper (the maintained
+# replacement for the deprecated glow.yazi plugin). File is fed on stdin
+# (glow's `-`) so it always renders non-interactively -- never its pager.
+# $w = pane width, $t = terminal theme (dark/light).
+[plugin]
+prepend_previewers = [
+	{ url = "*.md",       run = 'piper -- CLICOLOR_FORCE=1 glow -s $t -w $w - < "$1"' },
+	{ url = "*.markdown", run = 'piper -- CLICOLOR_FORCE=1 glow -s $t -w $w - < "$1"' },
+]

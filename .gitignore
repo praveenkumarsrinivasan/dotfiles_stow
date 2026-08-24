@@ -10,3 +10,7 @@
 .claude/hooks/
 .config/karabiner/automatic_backups/
 zsh-custom/slack_alias.zsh
+.config/acli/
+.config/agent-slack/
+.config/cagent/
+.config/iterm2/
