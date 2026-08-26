@@ -1,3 +1,3 @@
 return {
-  { "echasnovski/mini.surround", opts = {} },
+  { "nvim-mini/mini.surround", opts = {} },
 }

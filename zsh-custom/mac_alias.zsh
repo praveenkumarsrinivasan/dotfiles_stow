@@ -6,6 +6,7 @@ alias dl='cd ~/Downloads'
 alias dk='cd ~/Desktop'
 alias doc='cd ~/Documents'
 alias sbx='cd ~/Documents/Sandbox'
+alias prj='cd ~/Documents/Sandbox/Projects/'
 alias vi='nvim'
 alias y='yazi'
 

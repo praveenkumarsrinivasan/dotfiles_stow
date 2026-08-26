@@ -6,3 +6,6 @@ export PATH="$HOME/.local/bin:$PATH"
 
 export DOTFILES_DIR=~/dotfiles
 
+# Let gpg-agent/pinentry find the current terminal (needed by pass).
+export GPG_TTY=$(tty)
+
