@@ -1,0 +1,7 @@
+# Ctrl-p on the hovered file -> macOS Quick Look, which uses QLMarkdown to
+# render the FULL doc, including Mermaid charts. Non-blocking (--orphan) so
+# the preview panel opens while yazi stays responsive.
+[[mgr.prepend_keymap]]
+on   = "<C-p>"
+run  = "shell --orphan -- qlmanage -p %h >/dev/null 2>&1"
+desc = "Quick Look (QLMarkdown) — rendered preview w/ charts"

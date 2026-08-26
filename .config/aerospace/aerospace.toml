@@ -1,0 +1,216 @@
+# AeroSpace configuration  https://nikitabobko.github.io/AeroSpace/guide
+# Stow target: ~/.config/aerospace/aerospace.toml
+# Reload after edits: `aerospace reload-config`
+#
+# Modifier choice: Meh (Cmd+Ctrl+Alt) emitted by Karabiner-Elements when
+# Caps Lock is held. So:
+#   cmd-ctrl-alt-h         = Caps Lock + h          (basic action: focus)
+#   cmd-ctrl-alt-shift-h   = Caps Lock + Shift + h  (variant: move)
+# Caps Lock tapped alone = Escape (useful in vim).
+#
+# Why Meh (3 mods) and not Hyper (4 mods): if Caps Lock emitted all 4 mods
+# including Shift, then "Caps + h" and "Caps + Shift + h" would dedupe to
+# the same chord — no way to distinguish focus from move. Dropping Shift
+# from Caps Lock's modifier set leaves Shift free for variants. Most
+# people still call this "Hyper" colloquially.
+#
+# Karabiner config: ~/dotfiles/.config/karabiner/karabiner.json (stowed).
+# If Karabiner isn't running, NONE of these bindings work.
+#
+# Avoids all conflicts with:
+#   - tmux pane nav (M-h, M-l)
+#   - nvim line move (M-j, M-k via tmux pass-through)
+#   - Ghostty (Alt+G for Hammerspoon switcher)
+#   - macOS native Cmd+letter shortcuts
+
+start-at-login = true
+after-login-command = []
+after-startup-command = []
+
+# Default container layout. Only 'tiles' or 'accordion' are valid here —
+# 'floating' is set per-window via the on-window-detected rules below.
+default-root-container-orientation = 'auto'
+default-root-container-layout = 'tiles'
+
+# Normalize layout to keep things tidy
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# Padding inside accordion layout
+accordion-padding = 30
+
+# Cursor follows focus when switching workspaces
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Aerospace + macOS Mission Control: don't fight, integrate
+key-mapping.preset = 'qwerty'
+
+# ──────────────────────────────────────────────
+# Gaps (between windows / monitor edge)
+# ──────────────────────────────────────────────
+# Gaps around windows.
+# - inner.* applies between adjacent tiled windows
+# - outer.* applies between any window and the screen edge
+# Floating windows ignore these UNLESS you use AeroSpace's fullscreen
+# command (Caps+Shift+F) — that one respects outer gaps and gives a
+# uniform border around fullscreen-tiled apps. macOS-native maximize
+# (green button "Zoom") will go edge-to-edge regardless.
+[gaps]
+inner.horizontal = 10
+inner.vertical   = 10
+outer.left       = 12
+outer.bottom     = 12
+outer.top        = 12
+outer.right      = 12
+
+# ──────────────────────────────────────────────
+# Main mode bindings
+# ──────────────────────────────────────────────
+[mode.main.binding]
+
+# Focus windows (vim-style)
+cmd-ctrl-alt-h = 'focus left'
+cmd-ctrl-alt-j = 'focus down'
+cmd-ctrl-alt-k = 'focus up'
+cmd-ctrl-alt-l = 'focus right'
+
+# Move windows
+cmd-ctrl-alt-shift-h = 'move left'
+cmd-ctrl-alt-shift-j = 'move down'
+cmd-ctrl-alt-shift-k = 'move up'
+cmd-ctrl-alt-shift-l = 'move right'
+
+# Switch to workspace 1-9
+cmd-ctrl-alt-1 = 'workspace 1'
+cmd-ctrl-alt-2 = 'workspace 2'
+cmd-ctrl-alt-3 = 'workspace 3'
+cmd-ctrl-alt-4 = 'workspace 4'
+cmd-ctrl-alt-5 = 'workspace 5'
+cmd-ctrl-alt-6 = 'workspace 6'
+cmd-ctrl-alt-7 = 'workspace 7'
+cmd-ctrl-alt-8 = 'workspace 8'
+cmd-ctrl-alt-9 = 'workspace 9'
+
+# Move focused window to workspace
+cmd-ctrl-alt-shift-1 = 'move-node-to-workspace 1'
+cmd-ctrl-alt-shift-2 = 'move-node-to-workspace 2'
+cmd-ctrl-alt-shift-3 = 'move-node-to-workspace 3'
+cmd-ctrl-alt-shift-4 = 'move-node-to-workspace 4'
+cmd-ctrl-alt-shift-5 = 'move-node-to-workspace 5'
+cmd-ctrl-alt-shift-6 = 'move-node-to-workspace 6'
+cmd-ctrl-alt-shift-7 = 'move-node-to-workspace 7'
+cmd-ctrl-alt-shift-8 = 'move-node-to-workspace 8'
+cmd-ctrl-alt-shift-9 = 'move-node-to-workspace 9'
+
+# Cycle workspaces (prev/next non-empty)
+cmd-ctrl-alt-tab = 'workspace-back-and-forth'
+
+# Cycle windows in the current workspace (e.g. multiple Ghostty windows on ws 1).
+# Replacement for macOS Cmd+` since each AeroSpace workspace = one app, all
+# windows of that app live as siblings in the workspace tree.
+cmd-ctrl-alt-backtick       = 'focus dfs-next'   # Caps + `      → next window
+cmd-ctrl-alt-shift-backtick = 'focus dfs-prev'   # Caps+Shift+`  → previous window
+
+# Toggle to last-focused window (whatever workspace it's on)
+cmd-ctrl-alt-o = 'focus-back-and-forth'
+
+# Layout toggles
+cmd-ctrl-alt-slash = 'layout tiles horizontal vertical'   # tiling: toggle h/v split
+cmd-ctrl-alt-comma = 'layout accordion horizontal vertical'  # accordion mode
+
+# Float / tile toggle
+cmd-ctrl-alt-f = 'layout floating tiling'
+
+# macOS native fullscreen on focused window
+cmd-ctrl-alt-shift-f = 'fullscreen'
+
+# Open new Ghostty window
+cmd-ctrl-alt-enter = 'exec-and-forget open -na ghostty'
+
+# Enter resize mode (then h/j/k/l to resize, esc to exit)
+cmd-ctrl-alt-r = 'mode resize'
+
+# Service mode (reload, restart, joins)
+cmd-ctrl-alt-shift-semicolon = 'mode service'
+
+# Move focused window to a different monitor
+cmd-ctrl-alt-shift-left  = 'move-node-to-monitor --wrap-around prev'
+cmd-ctrl-alt-shift-right = 'move-node-to-monitor --wrap-around next'
+
+# ──────────────────────────────────────────────
+# Resize mode (cmd-ctrl-alt-r enters; esc returns)
+# ──────────────────────────────────────────────
+[mode.resize.binding]
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+equal = 'balance-sizes'
+backspace = ['flatten-workspace-tree', 'mode main']
+enter = 'mode main'
+esc = 'mode main'
+
+# ──────────────────────────────────────────────
+# Service mode (cmd-ctrl-alt-shift-; enters)
+# ──────────────────────────────────────────────
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']            # reset layout
+f = ['layout floating tiling', 'mode main']            # toggle floating
+backspace = ['close-all-windows-but-current', 'mode main']
+
+# Join with neighbor (combine adjacent containers)
+cmd-ctrl-alt-shift-h = ['join-with left', 'mode main']
+cmd-ctrl-alt-shift-j = ['join-with down', 'mode main']
+cmd-ctrl-alt-shift-k = ['join-with up', 'mode main']
+cmd-ctrl-alt-shift-l = ['join-with right', 'mode main']
+
+# ──────────────────────────────────────────────
+# Auto-place specific apps to specific workspaces
+# Uncomment / customize to taste.
+# Find an app's bundle id with: aerospace list-apps
+# ──────────────────────────────────────────────
+
+# Workspace assignments for top apps. Caps + 1..5 jumps between them.
+# Each rule also forces 'layout floating' so the window doesn't tile —
+# behaves as a regular macOS window. Maximize each app once via the green
+# button (or Caps+Shift+F for AeroSpace fullscreen) and macOS remembers
+# the size on subsequent launches.
+# To find a bundle id: aerospace list-apps  OR  osascript -e 'id of app "Foo"'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = ['move-node-to-workspace 1', 'layout floating']
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = ['move-node-to-workspace 2', 'layout floating']
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'  # Slack
+run = ['move-node-to-workspace 3', 'layout floating']
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = ['move-node-to-workspace 4', 'layout floating']
+
+# Google Meet runs as a Chrome PWA — bundle id includes a per-install hash.
+# If you reinstall the PWA, find the new id with `aerospace list-apps`.
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome.app.kjgfgldnnfoeklkmfkjfagphfepbbdan'
+run = ['move-node-to-workspace 5', 'layout floating']
+
+# Catch-all: float any other app too (don't tile uncategorized apps).
+# Must come AFTER the specific rules above so AeroSpace evaluates those first.
+[[on-window-detected]]
+run = ['layout floating']
+
+# Force certain apps to float (settings windows, dialogs)
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+if.window-title-regex-substring = '(Copy|Move|Delete|Info)'
+run = 'layout floating'

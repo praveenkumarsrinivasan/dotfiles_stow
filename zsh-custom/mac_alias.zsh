@@ -9,6 +9,7 @@ alias sbx='cd ~/Documents/Sandbox'
 alias prj='cd ~/Documents/Sandbox/Projects/'
 alias vi='nvim'
 alias y='yazi'
+alias pb='pbcopy'
 
 # Recursively delete .DS_Store files
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
